@@ -296,7 +296,6 @@ Makefile: coreplugin.pro D:\QtBuild\mkspecs\win32-msvc\qmake.conf D:\QtBuild\mks
 		D:\QtBuild\lib\Qt5PrintSupport.prl \
 		D:\QtBuild\lib\Qt5Widgets.prl \
 		D:\QtBuild\lib\Qt5Gui.prl \
-		D:\QtBuild\lib\Qt5Qml.prl \
 		D:\QtBuild\lib\Qt5Network.prl \
 		D:\QtBuild\lib\Qt5Sql.prl \
 		D:\QtBuild\lib\Qt5Concurrent.prl \
@@ -308,7 +307,6 @@ Makefile: coreplugin.pro D:\QtBuild\mkspecs\win32-msvc\qmake.conf D:\QtBuild\mks
 		D:\QtBuild\lib\Qt5PrintSupportd.prl \
 		D:\QtBuild\lib\Qt5Widgetsd.prl \
 		D:\QtBuild\lib\Qt5Guid.prl \
-		D:\QtBuild\lib\Qt5Qmld.prl \
 		D:\QtBuild\lib\Qt5Networkd.prl \
 		D:\QtBuild\lib\Qt5Sqld.prl \
 		D:\QtBuild\lib\Qt5Testd.prl \
@@ -527,7 +525,6 @@ Core.json.in:
 D:\QtBuild\lib\Qt5PrintSupport.prl:
 D:\QtBuild\lib\Qt5Widgets.prl:
 D:\QtBuild\lib\Qt5Gui.prl:
-D:\QtBuild\lib\Qt5Qml.prl:
 D:\QtBuild\lib\Qt5Network.prl:
 D:\QtBuild\lib\Qt5Sql.prl:
 D:\QtBuild\lib\Qt5Concurrent.prl:
@@ -539,7 +536,6 @@ core.qrc:
 D:\QtBuild\lib\Qt5PrintSupportd.prl:
 D:\QtBuild\lib\Qt5Widgetsd.prl:
 D:\QtBuild\lib\Qt5Guid.prl:
-D:\QtBuild\lib\Qt5Qmld.prl:
 D:\QtBuild\lib\Qt5Networkd.prl:
 D:\QtBuild\lib\Qt5Sqld.prl:
 D:\QtBuild\lib\Qt5Testd.prl:
@@ -560,7 +556,7 @@ clean: debug-clean release-clean  FORCE
 	-$(DEL_FILE) ..\..\..\lib\qtcreator\plugins\Core4.idb
 distclean: debug-distclean release-distclean  FORCE
 	-$(DEL_FILE) Makefile
-	-$(DEL_FILE) D:\QtBuild\qtcreator\qt-creator-4.14\src\plugins\coreplugin\Core.json ..\..\..\lib\qtcreator\plugins\Core4.lib ..\..\..\lib\qtcreator\plugins\Core4.pdb
+	-$(DEL_FILE) D:\QtBuild\qtcreator\qtcreator-plugin\qt-creator-4.14\src\plugins\coreplugin\Core.json ..\..\..\lib\qtcreator\plugins\Core4.lib ..\..\..\lib\qtcreator\plugins\Core4.pdb
 
 debug-mocclean:
 	@set MAKEFLAGS=$(MAKEFLAGS)

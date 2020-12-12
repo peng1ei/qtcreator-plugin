@@ -14,4 +14,4 @@ for(l, SUBDIRS) {
     $$lv = $$QTC_LIB_DEPENDS
 }
 
-QMAKE_EXTRA_TARGETS += deployqt # dummy
+#QMAKE_EXTRA_TARGETS += deployqt # dummy

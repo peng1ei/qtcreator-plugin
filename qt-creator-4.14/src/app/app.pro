@@ -15,7 +15,7 @@ SOURCES += main.cpp ../tools/qtcreatorcrashhandler/crashhandlersetup.cpp
 RPATH_BASE = $$IDE_BIN_PATH
 include(../rpath.pri)
 
-include(../libs/qt-breakpad/qtbreakpad.pri)
+#include(../libs/qt-breakpad/qtbreakpad.pri)
 
 LIBS *= -l$$qtLibraryName(ExtensionSystem) -l$$qtLibraryName(Aggregation) -l$$qtLibraryName(Utils)
 
@@ -50,8 +50,8 @@ win32 {
     QMAKE_INFO_PLIST = $$OUT_PWD/Info.plist
 }
 
-target.path = $$INSTALL_APP_PATH
-INSTALLS += target
+#target.path = $$INSTALL_APP_PATH
+#INSTALLS += target
 
 DISTFILES += qtcreator.rc \
     Info.plist \
@@ -61,4 +61,4 @@ QMAKE_SUBSTITUTES += $$PWD/app_version.h.in
 
 CONFIG += no_batch
 
-QMAKE_EXTRA_TARGETS += deployqt # dummy
+#QMAKE_EXTRA_TARGETS += deployqt # dummy
