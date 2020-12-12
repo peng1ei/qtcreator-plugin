@@ -46,6 +46,8 @@ Makefile.Release
 Makefile.Debug
 .qmake.stash
 
+qt-creator-4.14/.qmake.stash
+
 qt-creator-4.14/Makefile*
 qt-creator-4.14/src/Makefile*
 qt-creator-4.14/src/app/Makefile*
