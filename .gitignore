@@ -53,3 +53,27 @@ qt-creator-4.14/src/app/Makefile*
 qt-creator-4.14/src/libs/utils/ui_*.h
 qt-creator-4.14/src/libs/extensionsystem/ui_*.h
 
+qt-creator-4.14/Makefile
+qt-creator-4.14/Makefile.Debug
+qt-creator-4.14/Makefile.Release
+qt-creator-4.14/src/Makefile
+qt-creator-4.14/src/Makefile.Debug
+qt-creator-4.14/src/Makefile.Release
+qt-creator-4.14/src/libs/Makefile
+qt-creator-4.14/src/libs/Makefile.Debug
+qt-creator-4.14/src/libs/Makefile.Release
+qt-creator-4.14/src/libs/aggregation/Makefile
+qt-creator-4.14/src/libs/aggregation/Makefile.Debug
+qt-creator-4.14/src/libs/aggregation/Makefile.Release
+qt-creator-4.14/src/libs/extensionsystem/Makefile
+qt-creator-4.14/src/libs/extensionsystem/Makefile.Debug
+qt-creator-4.14/src/libs/extensionsystem/Makefile.Release
+qt-creator-4.14/src/libs/utils/Makefile
+qt-creator-4.14/src/libs/utils/Makefile.Debug
+qt-creator-4.14/src/libs/utils/Makefile.Release
+qt-creator-4.14/src/plugins/Makefile
+qt-creator-4.14/src/plugins/Makefile.Debug
+qt-creator-4.14/src/plugins/Makefile.Release
+qt-creator-4.14/src/plugins/coreplugin/Makefile
+qt-creator-4.14/src/plugins/coreplugin/Makefile.Debug
+qt-creator-4.14/src/plugins/coreplugin/Makefile.Release
