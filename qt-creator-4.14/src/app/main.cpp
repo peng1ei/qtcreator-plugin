@@ -572,6 +572,7 @@ int main(int argc, char **argv)
     PluginManager::setGlobalSettings(globalSettings);
     PluginManager::setSettings(settings);
 
+#if 0
     QTranslator translator;
     QTranslator qtTranslator;
     QStringList uiLanguages = QLocale::system().uiLanguages();
@@ -600,11 +601,12 @@ int main(int argc, char **argv)
             break;
         }
     }
+#endif
 
     app.setDesktopFileName("org.qt-project.qtcreator.desktop");
 
     // Make sure we honor the system's proxy settings
-    QNetworkProxyFactory::setUseSystemConfiguration(true);
+    //QNetworkProxyFactory::setUseSystemConfiguration(true);
 
     // Load
     const QStringList pluginPaths = getPluginPaths() + options.customPluginPaths;

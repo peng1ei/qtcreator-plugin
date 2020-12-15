@@ -1542,6 +1542,7 @@ void PluginManagerPrivate::setPluginPaths(const QStringList &paths)
     readPluginPaths();
 }
 
+// search *.dll or *.so files
 static const QStringList pluginFiles(const QStringList &pluginPaths)
 {
     QStringList pluginFiles;
@@ -1569,6 +1570,7 @@ void PluginManagerPrivate::readPluginPaths()
     // default
     pluginCategories.insert(QString(), QVector<PluginSpec *>());
 
+    // search all *.dll with all pluginPaths
     for (const QString &pluginFile : pluginFiles(pluginPaths)) {
         PluginSpec *spec = PluginSpec::read(pluginFile);
         if (!spec) // not a Qt Creator plugin

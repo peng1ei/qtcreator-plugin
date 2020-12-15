@@ -61,4 +61,6 @@ QMAKE_SUBSTITUTES += $$PWD/app_version.h.in
 
 CONFIG += no_batch
 
+DEFINES -= WITH_TESTS
+
 #QMAKE_EXTRA_TARGETS += deployqt # dummy
