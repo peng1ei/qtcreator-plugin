@@ -26,7 +26,6 @@
 #pragma once
 
 #include "../core_global.h"
-//#include "../icontext.h"
 #include "utils/id.h"
 
 #include <QObject>

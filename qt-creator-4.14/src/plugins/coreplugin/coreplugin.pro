@@ -72,5 +72,3 @@ else:unix {
         INSTALLS += image$${imagesize}
     }
 }
-
-DEFINES -= WITH_TESTS

@@ -25,12 +25,10 @@
 
 #include "commandsfile.h"
 #include "command_p.h"
-///#include <coreplugin/dialogs/shortcutsettings.h>
 #include <coreplugin/icore.h>
 
 #include <app/app_version.h>
 #include <utils/qtcassert.h>
-///#include <utils/fileutils.h>
 
 #include <QKeySequence>
 #include <QFile>
@@ -130,6 +128,7 @@ QMap<QString, QList<QKeySequence>> CommandsFile::importCommands() const
 
 bool CommandsFile::exportCommands(const QList<ShortcutItem *> &items)
 {
+    Q_UNUSED(items)
 //    Utils::FileSaver saver(m_filename, QIODevice::Text);
 //    if (!saver.hasError()) {
 //        const Context ctx;

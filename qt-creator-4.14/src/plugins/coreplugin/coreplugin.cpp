@@ -24,25 +24,11 @@
 ****************************************************************************/
 
 #include "coreplugin.h"
-///#include "designmode.h"
-///#include "editmode.h"
-///#include "helpmanager.h"
 #include "icore.h"
-///#include "idocument.h"
-///#include "iwizardfactory.h"
 #include "mainwindow.h"
-///#include "modemanager.h"
-////#include "reaper_p.h"
-///#include "themechooser.h"
 
 #include <coreplugin/actionmanager/actionmanager.h>
-///#include <coreplugin/documentmanager.h>
-///#include <coreplugin/editormanager/editormanager.h>
-///#include <coreplugin/find/findplugin.h>
-///#include <coreplugin/find/searchresultwindow.h>
-///#include <coreplugin/locator/locator.h>
 #include <coreplugin/coreconstants.h>
-///#include <coreplugin/fileutils.h>
 
 #include <app/app_version.h>
 #include <extensionsystem/pluginerroroverview.h>
@@ -78,7 +64,6 @@ static CorePlugin *m_instance = nullptr;
 CorePlugin::CorePlugin()
 {
     qRegisterMetaType<Id>();
-    ///qRegisterMetaType<Core::Search::TextPosition>();
     qRegisterMetaType<Utils::CommandLine>();
     qRegisterMetaType<Utils::FilePath>();
     m_instance = this;
@@ -86,14 +71,6 @@ CorePlugin::CorePlugin()
 
 CorePlugin::~CorePlugin()
 {
-    ///IWizardFactory::destroyFeatureProvider();
-    ///Find::destroy();
-
-    ///delete m_locator;
-    ///!delete m_editMode;
-
-    ///DesignMode::destroyModeIfRequired();
-
     delete m_mainWindow;
     setCreatorTheme(nullptr);
 }
@@ -130,6 +107,9 @@ CoreArguments parseArguments(const QStringList &arguments)
 
 bool CorePlugin::initialize(const QStringList &arguments, QString *errorMessage)
 {
+    Q_UNUSED(arguments)
+    Q_UNUSED(errorMessage)
+
     new ActionManager(this);
     m_mainWindow = new MainWindow;
 
@@ -153,8 +133,6 @@ void CorePlugin::extensionsInitialized()
 
 bool CorePlugin::delayedInitialize()
 {
-    ///m_locator->delayedInitialize();
-    ///IWizardFactory::allWizardFactories(); // scan for all wizard factories
     return true;
 }
 
@@ -169,9 +147,7 @@ QObject *CorePlugin::remoteCommand(const QStringList & /* options */,
         });
         return nullptr;
     }
-///!    IDocument *res = m_mainWindow->openFiles(
-///!                args, ICore::OpenFilesFlags(ICore::SwitchMode | ICore::CanContainLineAndColumnNumbers | ICore::SwitchSplitIfAlreadyVisible),
-///!                workingDirectory);
+
     m_mainWindow->raiseWindow();
     return nullptr;// return res;
 }
@@ -183,36 +159,8 @@ void CorePlugin::fileOpenRequest(const QString &f)
 
 void CorePlugin::addToPathChooserContextMenu(Utils::PathChooser *pathChooser, QMenu *menu)
 {
-//    QList<QAction*> actions = menu->actions();
-//    QAction *firstAction = actions.isEmpty() ? nullptr : actions.first();
-
-////    if (QDir().exists(pathChooser->filePath().toString())) {
-////        auto *showInGraphicalShell = new QAction(Core::FileUtils::msgGraphicalShellAction(), menu);
-////        connect(showInGraphicalShell, &QAction::triggered, pathChooser, [pathChooser]() {
-////            Core::FileUtils::showInGraphicalShell(pathChooser, pathChooser->filePath().toString());
-////        });
-////        menu->insertAction(firstAction, showInGraphicalShell);
-
-////        auto *showInTerminal = new QAction(Core::FileUtils::msgTerminalHereAction(), menu);
-////        connect(showInTerminal, &QAction::triggered, pathChooser, [pathChooser]() {
-////            if (pathChooser->openTerminalHandler())
-////                pathChooser->openTerminalHandler()();
-////            else
-////                FileUtils::openTerminal(pathChooser->filePath().toString());
-////        });
-////        menu->insertAction(firstAction, showInTerminal);
-
-//    } else {
-//        auto *mkPathAct = new QAction(tr("Create Folder"), menu);
-//        connect(mkPathAct, &QAction::triggered, pathChooser, [pathChooser]() {
-//            QDir().mkpath(pathChooser->filePath().toString());
-//            pathChooser->triggerChanged();
-//        });
-//        menu->insertAction(firstAction, mkPathAct);
-//    }
-
-//    if (firstAction)
-//        menu->insertSeparator(firstAction);
+    Q_UNUSED(pathChooser)
+    Q_UNUSED(menu);
 }
 
 void CorePlugin::checkSettings()
@@ -256,7 +204,6 @@ void CorePlugin::checkSettings()
 
 ExtensionSystem::IPlugin::ShutdownFlag CorePlugin::aboutToShutdown()
 {
-    ///Find::aboutToShutdown();
     m_mainWindow->aboutToShutdown();
     return SynchronousShutdown;
 }

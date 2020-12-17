@@ -233,6 +233,8 @@ ActionContainer *ActionManager::createTouchBar(Id id, const QIcon &icon, const Q
 
 Command *ActionManager::registerAction(QAction *action, Id id, bool scriptable)
 {
+    // [2020-12-17-23:54 by pl]
+    // TODO Can be obtained without override
     Action *a = d->overridableAction(id);
 
     if (a) {
@@ -242,28 +244,6 @@ Command *ActionManager::registerAction(QAction *action, Id id, bool scriptable)
     }
     return a;
 }
-
-/*!
-    Makes an \a action known to the system under the specified \a id.
-
-    Returns a Command instance that represents the action in the application
-    and is owned by the ActionManager. You can register several actions with
-    the same \a id as long as the \a context is different. In this case
-    triggering the action is forwarded to the registered QAction for the
-    currently active context. If the optional \a context argument is not
-    specified, the global context will be assumed. A \a scriptable action can
-    be called from a script without the need for the user to interact with it.
-*/
-//Command *ActionManager::registerAction(QAction *action, Id id, const Context &context, bool scriptable)
-//{
-//    Action *a = d->overridableAction(id);
-//    if (a) {
-//        a->addOverrideAction(action, context, scriptable);
-//        emit m_instance->commandListChanged();
-//        emit m_instance->commandAdded(id);
-//    }
-//    return a;
-//}
 
 /*!
     Returns the Command instance that has been created with registerAction()
@@ -403,14 +383,6 @@ void ActionManager::saveSettings()
 }
 
 /*!
-    \internal
-*/
-//void ActionManager::setContext(const Context &context)
-//{
-//    d->setContext(context);
-//}
-
-/*!
     \class ActionManagerPrivate
     \inheaderfile actionmanager_p.h
     \internal
@@ -424,26 +396,6 @@ ActionManagerPrivate::~ActionManagerPrivate()
     qDeleteAll(m_idContainerMap);
     qDeleteAll(m_idCmdMap);
 }
-
-//void ActionManagerPrivate::setContext(const Context &context)
-//{
-//    // here are possibilities for speed optimization if necessary:
-//    // let commands (de-)register themselves for contexts
-//    // and only update commands that are either in old or new contexts
-//    m_context = context;
-//    const IdCmdMap::const_iterator cmdcend = m_idCmdMap.constEnd();
-//    for (IdCmdMap::const_iterator it = m_idCmdMap.constBegin(); it != cmdcend; ++it)
-//        it.value()->setCurrentContext(m_context);
-//}
-
-//bool ActionManagerPrivate::hasContext(const Context &context) const
-//{
-//    for (int i = 0; i < m_context.size(); ++i) {
-//        if (context.contains(m_context.at(i)))
-//            return true;
-//    }
-//    return false;
-//}
 
 void ActionManagerPrivate::containerDestroyed()
 {
@@ -477,6 +429,7 @@ void ActionManagerPrivate::showShortcutPopup(const QString &shortcut)
 
 Action *ActionManagerPrivate::overridableAction(Id id)
 {
+    // [2020-12-17-23:56 by pl] Maybe need to pay attention here
     Action *a = m_idCmdMap.value(id, nullptr);
     if (!a) {
         a = new Action(id);// TODO
@@ -485,7 +438,6 @@ Action *ActionManagerPrivate::overridableAction(Id id)
         ICore::mainWindow()->addAction(a->action());
         a->action()->setObjectName(id.toString());
         a->action()->setShortcutContext(Qt::ApplicationShortcut);
-        //a->setCurrentContext(m_context);
         //a->action()->setEnabled(true); // TODO very import!!!! by pl 2020-12-17
 
         if (ActionManager::isPresentationModeEnabled())

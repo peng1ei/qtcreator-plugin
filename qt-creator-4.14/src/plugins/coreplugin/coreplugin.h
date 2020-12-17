@@ -26,8 +26,6 @@
 #pragma once
 
 #include <qglobal.h>
-//#include "reaper_p.h"
-
 #include <extensionsystem/iplugin.h>
 
 QT_BEGIN_NAMESPACE
@@ -41,9 +39,7 @@ class PathChooser;
 namespace Core {
 namespace Internal {
 
-///class EditMode;
 class MainWindow;
-///class Locator;
 
 class CorePlugin : public ExtensionSystem::IPlugin
 {
@@ -67,27 +63,11 @@ public:
 public slots:
     void fileOpenRequest(const QString&);
 
-#if defined(WITH_TESTS)
-private slots:
-    void testVcsManager_data();
-    void testVcsManager();
-    void testSplitLineAndColumnNumber();
-    void testSplitLineAndColumnNumber_data();
-    // Locator:
-    void test_basefilefilter();
-    void test_basefilefilter_data();
-
-    void testOutputFormatter();
-#endif
-
 private:
     static void addToPathChooserContextMenu(Utils::PathChooser *pathChooser, QMenu *menu);
     void checkSettings();
 
     MainWindow *m_mainWindow = nullptr;
-    ///!EditMode *m_editMode = nullptr;
-    ///Locator *m_locator = nullptr;
-    ///ProcessReapers m_reaper;
 };
 
 } // namespace Internal

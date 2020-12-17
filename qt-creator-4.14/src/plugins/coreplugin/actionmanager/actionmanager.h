@@ -27,7 +27,6 @@
 
 #include "../core_global.h"
 #include "../coreconstants.h"
-//#include "../icontext.h"
 #include "command.h"
 
 #include <QObject>
@@ -94,7 +93,6 @@ private:
     ActionManager(QObject *parent = nullptr);
     ~ActionManager() override;
     static void saveSettings();
-    //static void setContext(const Context &context);
 
     friend class Core::Internal::CorePlugin; // initialization
     friend class Core::Internal::MainWindow; // saving settings and setting context

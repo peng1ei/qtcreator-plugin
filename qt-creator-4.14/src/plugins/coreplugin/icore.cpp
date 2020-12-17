@@ -137,10 +137,7 @@
     from the focus object as well as the additional context.
 */
 
-///#include "dialogs/newdialog.h"
-///#include "iwizardfactory.h"
 #include "mainwindow.h"
-///!#include "documentmanager.h"
 
 #include <utils/hostosinfo.h>
 
@@ -176,7 +173,6 @@ ICore *ICore::instance()
 bool ICore::isNewItemDialogRunning()
 {
     return false;
-    ///return NewDialog::currentDialog() || IWizardFactory::isWizardRunning();
 }
 
 /*!
@@ -188,9 +184,6 @@ bool ICore::isNewItemDialogRunning()
 QWidget *ICore::newItemDialog()
 {
     return nullptr;
-//    if (NewDialog::currentDialog())
-//        return NewDialog::currentDialog();
-//    return IWizardFactory::currentWizard();
 }
 
 /*!
@@ -221,53 +214,6 @@ ICore::~ICore()
 }
 
 /*!
-    Opens a dialog where the user can choose from a set of \a factories that
-    create new files or projects.
-
-    The \a title argument is shown as the dialog title. The path where the
-    files will be created (if the user does not change it) is set
-    in \a defaultLocation. Defaults to DocumentManager::projectsDirectory()
-    or DocumentManager::fileDialogLastVisitedDirectory(), depending on wizard
-    kind.
-
-    Additional variables for the wizards are set in \a extraVariables.
-
-    \sa Core::DocumentManager
-    \sa isNewItemDialogRunning()
-    \sa newItemDialog()
-*/
-//void ICore::showNewItemDialog(const QString &title,
-//                              const QList<IWizardFactory *> &factories,
-//                              const QString &defaultLocation,
-//                              const QVariantMap &extraVariables)
-//{
-//    QTC_ASSERT(!isNewItemDialogRunning(), return);
-//    auto newDialog = new NewDialog(dialogParent());
-//    connect(newDialog, &QObject::destroyed, m_instance, &ICore::updateNewItemDialogState);
-//    newDialog->setWizardFactories(factories, defaultLocation, extraVariables);
-//    newDialog->setWindowTitle(title);
-//    newDialog->showDialog();
-
-//    updateNewItemDialogState();
-//}
-
-/*!
-    Opens the options dialog on the specified \a page. The dialog's \a parent
-    defaults to dialogParent(). If the dialog is already shown when this method
-    is called, it is just switched to the specified \a page.
-
-    Returns whether the user accepted the dialog.
-
-    \sa msgShowOptionsDialog()
-    \sa msgShowOptionsDialogToolTip()
-*/
-//bool ICore::showOptionsDialog(const Id page, QWidget *parent)
-//{
-//    return false;
-//    ///return executeSettingsDialog(parent ? parent : dialogParent(), page);
-//}
-
-/*!
     Returns the text to use on buttons that open the options dialog.
 
     \sa showOptionsDialog()
@@ -293,38 +239,6 @@ QString ICore::msgShowOptionsDialogToolTip()
         return QCoreApplication::translate("Core", "Open Options dialog.",
                                            "msgShowOptionsDialogToolTip (non-mac version)");
 }
-
-/*!
-    Creates a message box with \a parent that contains a \uicontrol Configure
-    button for opening the settings page specified by \a settingsId.
-
-    The dialog has \a title and displays the message \a text and detailed
-    information specified by \a details.
-
-    Use this function to display configuration errors and to point users to the
-    setting they should fix.
-
-    Returns \c true if the user accepted the settings dialog.
-
-    \sa showOptionsDialog()
-*/
-//bool ICore::showWarningWithOptions(const QString &title, const QString &text,
-//                                   const QString &details, Id settingsId, QWidget *parent)
-//{
-//    if (!parent)
-//        parent = m_mainwindow;
-//    QMessageBox msgBox(QMessageBox::Warning, title, text,
-//                       QMessageBox::Ok, parent);
-//    if (!details.isEmpty())
-//        msgBox.setDetailedText(details);
-//    QAbstractButton *settingsButton = nullptr;
-//    if (settingsId.isValid())
-//        settingsButton = msgBox.addButton(msgShowOptionsDialog(), QMessageBox::AcceptRole);
-//    msgBox.exec();
-//    if (settingsButton && msgBox.clickedButton() == settingsButton)
-//        return showOptionsDialog(settingsId);
-//    return false;
-//}
 
 /*!
     Returns the application's main settings object.
@@ -364,18 +278,6 @@ SettingsDatabase *ICore::settingsDatabase()
 {
     return m_mainwindow->settingsDatabase();
 }
-
-/*!
-    Returns the application's printer object.
-
-    Always use this printer object for printing, so the different parts of the
-    application re-use its settings.
-*/
-///! pl
-//QPrinter *ICore::printer()
-//{
-//    return m_mainwindow->printer();
-//}
 
 /*!
     Returns the locale string for the user interface language that is currently
@@ -584,40 +486,6 @@ QString ICore::buildCompatibilityString()
 }
 
 /*!
-    Returns the top level IContext of the current context, or \c nullptr if
-    there is none.
-
-    \sa updateAdditionalContexts()
-    \sa addContextObject()
-    \sa {The Action Manager and Commands}
-*/
-//IContext *ICore::currentContextObject()
-//{
-//    return m_mainwindow->currentContextObject();
-//}
-
-/*!
-    Returns the widget of the top level IContext of the current context, or \c
-    nullptr if there is none.
-
-    \sa currentContextObject()
-*/
-//QWidget *ICore::currentContextWidget()
-//{
-//    IContext *context = currentContextObject();
-//    return context ? context->widget() : nullptr;
-//}
-
-/*!
-    Returns the registered IContext instance for the specified \a widget,
-    if any.
-*/
-//IContext *ICore::contextObject(QWidget *widget)
-//{
-//    return m_mainwindow->contextObject(widget);
-//}
-
-/*!
     Returns the main window of the application.
 
     For dialog parents use dialogParent().
@@ -651,16 +519,6 @@ QStatusBar *ICore::statusBar()
 }
 
 /*!
-    Returns a central InfoBar that is shown in \QC's main window.
-    Use for notifying the user of something without interrupting with
-    dialog. Use sparingly.
-*/
-//Utils::InfoBar *ICore::infoBar()
-//{
-//    return m_mainwindow->infoBar();
-//}
-
-/*!
     Raises and activates the window for \a widget. This contains workarounds
     for X11.
 */
@@ -678,90 +536,6 @@ void ICore::raiseWindow(QWidget *widget)
 }
 
 /*!
-    Removes the contexts specified by \a remove from the list of active
-    additional contexts, and adds the contexts specified by \a add with \a
-    priority.
-
-    The additional contexts are not associated with an IContext instance.
-
-    High priority additional contexts have higher priority than the contexts
-    added by IContext instances, low priority additional contexts have lower
-    priority than the contexts added by IContext instances.
-
-    \sa addContextObject()
-    \sa {The Action Manager and Commands}
-*/
-//void ICore::updateAdditionalContexts(const Context &remove, const Context &add,
-//                                     ContextPriority priority)
-//{
-//    //m_mainwindow->updateAdditionalContexts(remove, add, priority);
-//}
-
-/*!
-    Adds \a context with \a priority to the list of active additional contexts.
-
-    \sa updateAdditionalContexts()
-*/
-//void ICore::addAdditionalContext(const Context &context, ContextPriority priority)
-//{
-//    //m_mainwindow->updateAdditionalContexts(Context(), context, priority);
-//}
-
-/*!
-    Removes \a context from the list of active additional contexts.
-
-    \sa updateAdditionalContexts()
-*/
-//void ICore::removeAdditionalContext(const Context &context)
-//{
-//    m_mainwindow->updateAdditionalContexts(context, Context(), ContextPriority::Low);
-//}
-
-/*!
-    Adds \a context to the list of registered IContext instances.
-    Whenever the IContext's \l{IContext::widget()}{widget} is in the application
-    focus widget's parent hierarchy, its \l{IContext::context()}{context} is
-    added to the list of active contexts.
-
-    \sa removeContextObject()
-    \sa updateAdditionalContexts()
-    \sa currentContextObject()
-    \sa {The Action Manager and Commands}
-*/
-//void ICore::addContextObject(IContext *context)
-//{
-//    m_mainwindow->addContextObject(context);
-//}
-
-/*!
-    Unregisters a \a context object from the list of registered IContext
-    instances. IContext instances are automatically removed when they are
-    deleted.
-
-    \sa addContextObject()
-    \sa updateAdditionalContexts()
-    \sa currentContextObject()
-*/
-//void ICore::removeContextObject(IContext *context)
-//{
-//    m_mainwindow->removeContextObject(context);
-//}
-
-/*!
-    Registers a \a window with the specified \a context. Registered windows are
-    shown in the \uicontrol Window menu and get registered for the various
-    window related actions, like the minimize, zoom, fullscreen and close
-    actions.
-
-    Whenever the application focus is in \a window, its \a context is made
-    active.
-*/
-//void ICore::registerWindow(QWidget *window, const Context &context)
-//{
-//    new WindowSupport(window, context); // deletes itself when widget is destroyed
-//}
-
-/*!
     Opens files using \a arguments and \a flags like it would be
     done if they were given to \QC on the command line, or
     they were opened via \uicontrol File > \uicontrol Open.
@@ -769,7 +543,8 @@ void ICore::raiseWindow(QWidget *widget)
 
 void ICore::openFiles(const QStringList &arguments, ICore::OpenFilesFlags flags)
 {
-    ///!m_mainwindow->openFiles(arguments, flags);
+    Q_UNUSED(arguments)
+    Q_UNUSED(flags)
 }
 
 /*!

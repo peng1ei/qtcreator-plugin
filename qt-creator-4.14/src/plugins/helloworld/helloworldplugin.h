@@ -27,14 +27,8 @@
 
 #include <extensionsystem/iplugin.h>
 
-QT_BEGIN_NAMESPACE
-class QAction;
-QT_END_NAMESPACE
-
 namespace HelloWorld {
 namespace Internal {
-
-
 
 class HelloWorldPlugin
   : public ExtensionSystem::IPlugin
@@ -52,8 +46,6 @@ public:
 
 private:
     void sayHelloWorld();
-
-    QAction *helloWorldAction;
 };
 
 } // namespace Internal

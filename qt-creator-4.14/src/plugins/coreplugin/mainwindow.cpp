@@ -525,7 +525,7 @@ void MainWindow::readSettings()
         // Migrate legacy setting from Qt Creator 4.6 and earlier
         static const char modeSelectorVisibleKey[] = "ModeSelectorVisible";
         if (!settings->contains(modeSelectorLayoutKey) && settings->contains(modeSelectorVisibleKey)) {
-            bool visible = settings->value(modeSelectorVisibleKey, true).toBool();
+            //bool visible = settings->value(modeSelectorVisibleKey, true).toBool();
         }
 
         updateModeSelectorStyleMenu();

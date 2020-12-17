@@ -41,8 +41,6 @@ QT_END_NAMESPACE
 
 namespace Core {
 
-//class Context;
-
 constexpr bool useMacShortcuts = Utils::HostOsInfo::isMacHost();
 
 class CORE_EXPORT Command : public QObject
@@ -72,7 +70,6 @@ public:
     virtual Utils::Id id() const = 0;
 
     virtual QAction *action() const = 0;
-    //virtual Context context() const = 0;
 
     virtual void setAttribute(CommandAttribute attr) = 0;
     virtual void removeAttribute(CommandAttribute attr) = 0;
@@ -84,9 +81,6 @@ public:
     virtual QString stringWithAppendedShortcut(const QString &str) const = 0;
     void augmentActionWithShortcutToolTip(QAction *action) const;
     static QToolButton *toolButtonWithAppendedShortcut(QAction *action, Command *cmd);
-
-    virtual bool isScriptable() const = 0;
-    //virtual bool isScriptable(const Context &) const = 0;
 
     virtual void setTouchBarText(const QString &text) = 0;
     virtual QString touchBarText() const = 0;

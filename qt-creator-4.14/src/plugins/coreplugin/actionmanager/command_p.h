@@ -27,8 +27,6 @@
 
 #include "command.h"
 
-//#include <coreplugin/icontext.h>
-
 #include <utils/id.h>
 #include <utils/proxyaction.h>
 
@@ -66,16 +64,10 @@ public:
 
     QString stringWithAppendedShortcut(const QString &str) const override;
 
-    //Context context() const override;
-    //void setCurrentContext(const Context &context);
-
     bool isActive() const override;
     void addOverrideAction(QAction *action, bool scriptable);
     void removeOverrideAction(QAction *action);
     bool isEmpty() const;
-
-    bool isScriptable() const override;
-    //bool isScriptable(const Context &context) const override;
 
     void setAttribute(CommandAttribute attr) override;
     void removeAttribute(CommandAttribute attr) override;
@@ -91,7 +83,6 @@ private:
     void updateActiveState();
     void setActive(bool state);
 
-    //Context m_context;
     CommandAttributes m_attributes;
     Utils::Id m_id;
     QList<QKeySequence> m_defaultKeys;
@@ -104,11 +95,7 @@ private:
     mutable std::unique_ptr<Utils::ProxyAction> m_touchBarAction;
     QString m_toolTip;
 
-    QMap<Utils::Id, QPointer<QAction> > m_contextActionMap;
-    QMap<QAction*, bool> m_scriptableMap;
-
     bool m_active = false;
-    bool m_contextInitialized = false;
 };
 
 } // namespace Internal

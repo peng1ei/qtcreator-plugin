@@ -26,7 +26,6 @@
 #pragma once
 
 #include "core_global.h"
-//#include "icontext.h"
 
 #include <QList>
 #include <QMainWindow>
@@ -47,8 +46,7 @@ class InfoBar;
 }
 
 namespace Core {
-//class Context;
-///class IWizardFactory;
+
 class SettingsDatabase;
 
 namespace Internal { class MainWindow; }
@@ -58,7 +56,6 @@ class CORE_EXPORT ICore : public QObject
     Q_OBJECT
 
     friend class Internal::MainWindow;
-    ///friend class IWizardFactory;
 
     explicit ICore(Internal::MainWindow *mw);
     ~ICore() override;
@@ -73,23 +70,13 @@ public:
 
     static bool isNewItemDialogRunning();
     static QWidget *newItemDialog();
-//    static void showNewItemDialog(const QString &title,
-//                                  const QList<IWizardFactory *> &factories,
-//                                  const QString &defaultLocation = QString(),
-//                                  const QVariantMap &extraVariables = QVariantMap());
 
-    //static bool showOptionsDialog(const Utils::Id page, QWidget *parent = nullptr);
     static QString msgShowOptionsDialog();
     static QString msgShowOptionsDialogToolTip();
 
-//    static bool showWarningWithOptions(const QString &title, const QString &text,
-//                                       const QString &details = QString(),
-//                                       Utils::Id settingsId = {},
-//                                       QWidget *parent = nullptr);
-
     static QSettings *settings(QSettings::Scope scope = QSettings::UserScope);
     static SettingsDatabase *settingsDatabase();
-    ///!static QPrinter *printer();
+
     static QString userInterfaceLanguage();
 
     static QString resourcePath();
@@ -102,22 +89,8 @@ public:
 
     static QMainWindow *mainWindow();
     static QWidget *dialogParent();
-    static Utils::InfoBar *infoBar();
 
     static void raiseWindow(QWidget *widget);
-
-    //static IContext *currentContextObject();
-    static QWidget *currentContextWidget();
-    //static IContext *contextObject(QWidget *widget);
-//    static void updateAdditionalContexts(const Context &remove, const Context &add,
-//                                         ContextPriority priority = ContextPriority::Low);
-//    static void addAdditionalContext(const Context &context,
-//                                     ContextPriority priority = ContextPriority::Low);
-//    static void removeAdditionalContext(const Context &context);
- //   static void addContextObject(IContext *context);
- //   static void removeContextObject(IContext *context);
-
-    //static void registerWindow(QWidget *window, const Context &context);
 
     enum OpenFilesFlags {
         None = 0,
@@ -146,8 +119,6 @@ signals:
     void newItemDialogStateChanged();
     void saveSettingsRequested(SaveSettingsReason reason);
     void coreAboutToClose();
-    //void contextAboutToChange(const QList<Core::IContext *> &context);
-    //void contextChanged(const Core::Context &context);
 
 public:
     /* internal use */

@@ -27,7 +27,6 @@
 #include "actionmanager.h"
 
 #include <coreplugin/coreconstants.h>
-//#include <coreplugin/icontext.h>
 
 #include <utils/qtcassert.h>
 
@@ -688,7 +687,6 @@ bool TouchBarActionContainer::updateInternal()
 */
 Command *ActionContainer::addSeparator(Id group)
 {
-    //static const Context context(Constants::C_GLOBAL);
     return addSeparator(group, nullptr);
 }
 

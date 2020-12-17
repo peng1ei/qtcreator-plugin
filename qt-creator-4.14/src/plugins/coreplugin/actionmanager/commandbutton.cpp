@@ -27,7 +27,6 @@
 #include "actionmanager.h"
 #include "command.h"
 
-
 #include <utils/proxyaction.h>
 
 using namespace Core;

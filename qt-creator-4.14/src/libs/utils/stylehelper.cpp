@@ -393,6 +393,7 @@ QPixmap StyleHelper::disabledSideBarIcon(const QPixmap &enabledicon)
 void StyleHelper::drawIconWithShadow(const QIcon &icon, const QRect &rect,
                                      QPainter *p, QIcon::Mode iconMode, int dipRadius, const QColor &color, const QPoint &dipOffset)
 {
+    Q_UNUSED(color)
     QPixmap cache;
     const int devicePixelRatio = p->device()->devicePixelRatio();
     QString pixmapName = QString::fromLatin1("icon %0 %1 %2 %3")
