@@ -227,8 +227,8 @@ void MainWindow::registerDefaultContainers()
         setMenuBar(menubar->menuBar());
     //menubar->appendGroup(Constants::G_FILE);
     //menubar->appendGroup(Constants::G_EDIT);
-    menubar->appendGroup(Constants::G_VIEW);
-    menubar->appendGroup(Constants::G_TOOLS);
+    //menubar->appendGroup(Constants::G_VIEW);
+    //menubar->appendGroup(Constants::G_TOOLS);
     //menubar->appendGroup(Constants::G_WINDOW);
     menubar->appendGroup(Constants::G_HELP);
 
@@ -260,6 +260,7 @@ void MainWindow::registerDefaultContainers()
     medit->appendGroup(Constants::G_EDIT_OTHER);
 #endif
 
+#if 0
     ActionContainer *mview = ActionManager::createMenu(Constants::M_VIEW);
     menubar->addMenu(mview, Constants::G_VIEW);
     mview->menu()->setTitle(tr("&View"));
@@ -280,16 +281,18 @@ void MainWindow::registerDefaultContainers()
 //    mwindow->appendGroup(Constants::G_WINDOW_NAVIGATE);
 //    mwindow->appendGroup(Constants::G_WINDOW_LIST);
 //    mwindow->appendGroup(Constants::G_WINDOW_OTHER);
+#endif
 
     // Help Menu
-    ac = ActionManager::createMenu(Constants::M_HELP);
+    ActionContainer *ac = ActionManager::createMenu(Constants::M_HELP);
     menubar->addMenu(ac, Constants::G_HELP);
     ac->menu()->setTitle(tr("&Help"));
     ac->appendGroup(Constants::G_HELP_HELP);
-    ac->appendGroup(Constants::G_HELP_SUPPORT);
+    //ac->appendGroup(Constants::G_HELP_SUPPORT);
     ac->appendGroup(Constants::G_HELP_ABOUT);
-    ac->appendGroup(Constants::G_HELP_UPDATES);
+    //ac->appendGroup(Constants::G_HELP_UPDATES);
 
+#if 0
     // macOS touch bar
 //    ac = ActionManager::createTouchBar(Constants::TOUCH_BAR,
 //                                       QIcon(),
@@ -299,6 +302,7 @@ void MainWindow::registerDefaultContainers()
 //    ac->appendGroup(Constants::G_TOUCHBAR_NAVIGATION);
 //    ac->appendGroup(Constants::G_TOUCHBAR_OTHER);
 //    ac->touchBar()->setApplicationTouchBar();
+#endif
 }
 
 void MainWindow::registerDefaultActions()
@@ -310,6 +314,7 @@ void MainWindow::registerDefaultActions()
     //ActionContainer *mwindow = ActionManager::actionContainer(Constants::M_WINDOW);
     ActionContainer *mhelp = ActionManager::actionContainer(Constants::M_HELP);
 
+#if 0
     // File menu separators
 //    mfile->addSeparator(Constants::G_FILE_SAVE);
 //    mfile->addSeparator(Constants::G_FILE_EXPORT);
@@ -388,6 +393,8 @@ void MainWindow::registerDefaultActions()
     ///mview->addMenu(mviews, Constants::G_VIEW_VIEWS);
     ///mviews->menu()->setTitle(tr("&Views"));
 
+#endif
+
     // "Help" separators
     mhelp->addSeparator(Constants::G_HELP_SUPPORT);
     if (!HostOsInfo::isMacHost())
@@ -395,8 +402,11 @@ void MainWindow::registerDefaultActions()
 
     mhelp->setOnAllDisabledBehavior(ActionContainer::OnAllDisabledBehavior::Show);
 
+    Command *cmd = nullptr;
+    QAction *tmpaction = nullptr;
+
     // About IDE Action
-    icon = QIcon::fromTheme(QLatin1String("help-about"));
+    QIcon icon = QIcon::fromTheme(QLatin1String("help-about"));
     if (HostOsInfo::isMacHost())
         tmpaction = new QAction(icon, tr("About &%1").arg(Constants::IDE_DISPLAY_NAME), this); // it's convention not to add dots to the about menu
     else
@@ -431,8 +441,6 @@ void MainWindow::registerDefaultActions()
         cmd = ActionManager::registerAction(tmpaction, "QtCreator.Help.Sep.About");
         mhelp->addAction(cmd, Constants::G_HELP_ABOUT);
     }
-
-
 }
 
 void MainWindow::registerModeSelectorStyleActions()

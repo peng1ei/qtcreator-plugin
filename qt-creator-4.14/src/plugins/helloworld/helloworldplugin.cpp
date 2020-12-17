@@ -33,6 +33,7 @@
 #include <QDebug>
 #include <QAction>
 #include <QMenu>
+#include <QMenuBar>
 #include <QMessageBox>
 #include <QPushButton>
 
@@ -68,10 +69,7 @@ bool HelloWorldPlugin::initialize(const QStringList &arguments, QString *errorMe
     Q_UNUSED(arguments)
     Q_UNUSED(errorMessage)
 
-    // Create a unique context for our own view, that will be used for the
-    // menu entry later.
-    //Core::Context context("HelloWorld.MainView");
-
+#if 1
     // Create an action to be triggered by a menu entry
     auto helloWorldAction = new QAction(tr("Say \"&Hello World!\""), this);
     helloWorldAction->setObjectName("hello");
@@ -94,8 +92,20 @@ bool HelloWorldPlugin::initialize(const QStringList &arguments, QString *errorMe
 
     // Request the Tools menu and add the Hello World menu to it
     Core::ActionContainer *toolsMenu =
-            Core::ActionManager::actionContainer(Core::Constants::M_TOOLS);
+            Core::ActionManager::createMenu("MyPlugin");
+            //Core::ActionManager::actionContainer("MyPlugin"/*Core::Constants::M_TOOLS*/);
     toolsMenu->addMenu(helloWorldMenu);
+    toolsMenu->menu()->setTitle("&MyPlugin");
+
+    Core::ActionContainer *menubar = Core::ActionManager::createMenuBar(Core::Constants::MENU_BAR);
+    menubar->appendGroup("MyPlugin");
+
+    // 1. add to first
+    //menubar->addMenu(toolsMenu, "MyPlugin"/*Group*/);
+
+    // 2. add to M_HELP before, if "before == nullptr", will insert last.
+    QMenu *beforeMenu = Core::ActionManager::actionContainer(Core::Constants::M_HELP)->menu();
+    menubar->menuBar()->insertMenu(beforeMenu->menuAction(), toolsMenu->menu());
 
     qDebug() << "helloWorldAction: " << helloWorldAction;
     qDebug() << "command: " << command->action()->objectName();
@@ -104,6 +114,26 @@ bool HelloWorldPlugin::initialize(const QStringList &arguments, QString *errorMe
     //command->action()->setEnabled(true);
 
     // Add a mode with a push button based on BaseMode.
+#else
+    Core::ActionContainer *menubar = Core::ActionManager::createMenuBar(Core::Constants::MENU_BAR);
+
+    // Create a DoNothing menu
+    Core::ActionContainer* ac = am->createMenu("DoNothingPlugin.DoNothingMenu");
+    ac->menu()->setTitle("DoNothing");
+    // Create a command for "About DoNothing".
+    Core::Command* cmd = am->registerAction(
+       new QAction(this),
+       "DoNothingPlugin.AboutDoNothing");
+    cmd->action()->setText("About DoNothing");
+    connect(cmd->action(), SIGNAL(triggered(bool)), this, SLOT(about()));
+    // Add DoNothing menu to the menubar
+    am->actionContainer(Core::Constants::MENU_BAR)->addMenu(ac);
+    // Add the "About DoNothing" action to the DoNothing menu
+    ac->addAction(cmd);
+
+    menubar->addMenu();
+#endif
+
 
     return true;
 }
