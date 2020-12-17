@@ -2,8 +2,7 @@ DEFINES += CORE_LIBRARY
 QT += \
     network \
     printsupport \
-    #qml \
-   sql
+    sql
 
 # embedding build time information prevents repeatedly binary exact versions from same source code
 isEmpty(QTC_SHOW_BUILD_DATE): QTC_SHOW_BUILD_DATE = $$(QTC_SHOW_BUILD_DATE)
@@ -13,7 +12,6 @@ include(../../qtcreatorplugin.pri)
 msvc: QMAKE_CXXFLAGS += -wd4251 -wd4290 -wd4250
 SOURCES += \
     mainwindow.cpp \
-    icontext.cpp \
     versiondialog.cpp \
     actionmanager/actionmanager.cpp \
     actionmanager/command.cpp \
@@ -25,7 +23,6 @@ SOURCES += \
     icore.cpp \
     settingsdatabase.cpp \
     dialogs/restartdialog.cpp \
-    windowsupport.cpp \
     messagebox.cpp \
     coreicons.cpp \
     plugininstallwizard.cpp
@@ -40,7 +37,6 @@ HEADERS += \
     actionmanager/command_p.h \
     actionmanager/actioncontainer_p.h \
     actionmanager/commandsfile.h \
-    icontext.h \
     icore.h \
     coreconstants.h \
     versiondialog.h \
@@ -49,7 +45,6 @@ HEADERS += \
     plugindialog.h \
     settingsdatabase.h \
     dialogs/restartdialog.h \
-    windowsupport.h \
     messagebox.h \
     coreicons.h \
     plugininstallwizard.h

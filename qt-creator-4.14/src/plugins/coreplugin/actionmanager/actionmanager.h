@@ -27,7 +27,7 @@
 
 #include "../core_global.h"
 #include "../coreconstants.h"
-#include "../icontext.h"
+//#include "../icontext.h"
 #include "command.h"
 
 #include <QObject>
@@ -42,7 +42,7 @@ namespace Core {
 
 class ActionContainer;
 class Command;
-class Context;
+//class Context;
 
 namespace Internal {
 class CorePlugin;
@@ -61,8 +61,17 @@ public:
                                            const QIcon &icon,
                                            const QString &text = QString());
 
+//    static Command *registerAction(QAction *action, Utils::Id id,
+//                                   const Context &context = Context(Constants::C_GLOBAL),
+//                                   bool scriptable = false);
+    /**
+     * @brief registerAction
+     * @param action
+     * @param id -- object name
+     * @param scriptable
+     * @return
+     */
     static Command *registerAction(QAction *action, Utils::Id id,
-                                   const Context &context = Context(Constants::C_GLOBAL),
                                    bool scriptable = false);
 
     static Command *command(Utils::Id id);
@@ -85,7 +94,7 @@ private:
     ActionManager(QObject *parent = nullptr);
     ~ActionManager() override;
     static void saveSettings();
-    static void setContext(const Context &context);
+    //static void setContext(const Context &context);
 
     friend class Core::Internal::CorePlugin; // initialization
     friend class Core::Internal::MainWindow; // saving settings and setting context

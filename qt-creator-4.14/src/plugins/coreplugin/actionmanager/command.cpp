@@ -26,7 +26,7 @@
 #include "command_p.h"
 
 #include <coreplugin/coreconstants.h>
-#include <coreplugin/icontext.h>
+//#include <coreplugin/icontext.h>
 
 #include <utils/hostosinfo.h>
 #include <utils/stringutils.h>
@@ -305,10 +305,10 @@ QString Action::stringWithAppendedShortcut(const QString &str) const
     return Utils::ProxyAction::stringWithAppendedShortcut(str, keySequence());
 }
 
-Context Action::context() const
-{
-    return m_context;
-}
+//Context Action::context() const
+//{
+//    return m_context;
+//}
 
 void Action::setKeySequences(const QList<QKeySequence> &keys)
 {
@@ -344,21 +344,21 @@ QString Action::description() const
     return id().toString();
 }
 
-void Action::setCurrentContext(const Context &context)
-{
-    m_context = context;
+//void Action::setCurrentContext(const Context &context)
+//{
+//    m_context = context;
 
-    QAction *currentAction = nullptr;
-    for (int i = 0; i < m_context.size(); ++i) {
-        if (QAction *a = m_contextActionMap.value(m_context.at(i), nullptr)) {
-            currentAction = a;
-            break;
-        }
-    }
+//    QAction *currentAction = nullptr;
+//    for (int i = 0; i < m_context.size(); ++i) {
+//        if (QAction *a = m_contextActionMap.value(m_context.at(i), nullptr)) {
+//            currentAction = a;
+//            break;
+//        }
+//    }
 
-    m_action->setAction(currentAction);
-    updateActiveState();
-}
+//    m_action->setAction(currentAction);
+//    updateActiveState();
+//}
 
 void Action::updateActiveState()
 {
@@ -377,7 +377,7 @@ static QString msgActionWarning(QAction *newAction, Id id, QAction *oldAction)
     return msg;
 }
 
-void Action::addOverrideAction(QAction *action, const Context &context, bool scriptable)
+void Action::addOverrideAction(QAction *action, bool scriptable)
 {
     // disallow TextHeuristic menu role, because it doesn't work with translations,
     // e.g. QTCREATORBUG-13101
@@ -385,17 +385,24 @@ void Action::addOverrideAction(QAction *action, const Context &context, bool scr
         action->setMenuRole(QAction::NoRole);
     if (isEmpty())
         m_action->initialize(action);
-    if (context.isEmpty()) {
-        m_contextActionMap.insert(Constants::C_GLOBAL, action);
-    } else {
-        for (const Id &id : context) {
-            if (m_contextActionMap.contains(id))
-                qWarning("%s", qPrintable(msgActionWarning(action, id, m_contextActionMap.value(id, nullptr))));
-            m_contextActionMap.insert(id, action);
-        }
-    }
+
+//----------------------------------------------------------------
+//    if (context.isEmpty()) {
+//        m_contextActionMap.insert(Constants::C_GLOBAL, action);
+//    } else {
+//        for (const Id &id : context) {
+//            if (m_contextActionMap.contains(id))
+//                qWarning("%s", qPrintable(msgActionWarning(action, id, m_contextActionMap.value(id, nullptr))));
+//            m_contextActionMap.insert(id, action);
+//        }
+//    }
+//----------------------------------------------------------------
+
+    // [2020-12-17-23:39 by pl] very important
+    // Without this sentence, the external custom Action signal slot will be invalid
+    m_action->setAction(action);
+
     m_scriptableMap[action] = scriptable;
-    setCurrentContext(m_context);
 }
 
 void Action::removeOverrideAction(QAction *action)
@@ -407,7 +414,6 @@ void Action::removeOverrideAction(QAction *action)
     }
     for (Id id : toRemove)
         m_contextActionMap.remove(id);
-    setCurrentContext(m_context);
 }
 
 bool Action::isActive() const
@@ -433,19 +439,19 @@ bool Action::isScriptable() const
     return m_scriptableMap.values().contains(true);
 }
 
-bool Action::isScriptable(const Context &context) const
-{
-    if (context == m_context && m_scriptableMap.contains(m_action->action()))
-        return m_scriptableMap.value(m_action->action());
+//bool Action::isScriptable(const Context &context) const
+//{
+//    if (context == m_context && m_scriptableMap.contains(m_action->action()))
+//        return m_scriptableMap.value(m_action->action());
 
-    for (int i = 0; i < context.size(); ++i) {
-        if (QAction *a = m_contextActionMap.value(context.at(i), nullptr)) {
-            if (m_scriptableMap.contains(a) && m_scriptableMap.value(a))
-                return true;
-        }
-    }
-    return false;
-}
+//    for (int i = 0; i < context.size(); ++i) {
+//        if (QAction *a = m_contextActionMap.value(context.at(i), nullptr)) {
+//            if (m_scriptableMap.contains(a) && m_scriptableMap.value(a))
+//                return true;
+//        }
+//    }
+//    return false;
+//}
 
 void Action::setAttribute(CommandAttribute attr)
 {

@@ -130,107 +130,17 @@ CoreArguments parseArguments(const QStringList &arguments)
 
 bool CorePlugin::initialize(const QStringList &arguments, QString *errorMessage)
 {
-    // register all mime types from all plugins
-    for (ExtensionSystem::PluginSpec *plugin : ExtensionSystem::PluginManager::plugins()) {
-        if (!plugin->isEffectivelyEnabled())
-            continue;
-        const QJsonObject metaData = plugin->metaData();
-        const QJsonValue mimetypes = metaData.value("Mimetypes");
-        QString mimetypeString;
-        if (Utils::readMultiLineString(mimetypes, &mimetypeString))
-            Utils::addMimeTypes(plugin->name() + ".mimetypes", mimetypeString.trimmed().toUtf8());
-    }
-
-//    if (ThemeEntry::availableThemes().isEmpty()) {
-//        *errorMessage = tr("No themes found in installation.");
-//        return false;
-//    }
-    const CoreArguments args = parseArguments(arguments);
-//    Theme::initialPalette(); // Initialize palette before setting it
-//    Theme *themeFromArg = ThemeEntry::createTheme(args.themeId);
-//    setCreatorTheme(themeFromArg ? themeFromArg
-//                                 : ThemeEntry::createTheme(ThemeEntry::themeSetting()));
-    InfoBar::initialize(ICore::settings(), creatorTheme());
     new ActionManager(this);
-    ActionManager::setPresentationModeEnabled(args.presentationMode);
     m_mainWindow = new MainWindow;
-    if (args.overrideColor.isValid())
-        m_mainWindow->setOverrideColor(args.overrideColor);
-    ///m_locator = new Locator;
+
     std::srand(unsigned(QDateTime::currentDateTime().toSecsSinceEpoch()));
     m_mainWindow->init();
-    ///!m_editMode = new EditMode;
-    ///!ModeManager::activateMode(m_editMode->id());
-
-    ///IWizardFactory::initialize();
-
-    // Make sure we respect the process's umask when creating new files
-    SaveFile::initializeUmask();
-
-    ///Find::initialize();
-    ///m_locator->initialize();
-
-    MacroExpander *expander = Utils::globalMacroExpander();
-    expander->registerVariable("CurrentDate:ISO", tr("The current date (ISO)."),
-                               []() { return QDate::currentDate().toString(Qt::ISODate); });
-    expander->registerVariable("CurrentTime:ISO", tr("The current time (ISO)."),
-                               []() { return QTime::currentTime().toString(Qt::ISODate); });
-    expander->registerVariable("CurrentDate:RFC", tr("The current date (RFC2822)."),
-                               []() { return QDate::currentDate().toString(Qt::RFC2822Date); });
-    expander->registerVariable("CurrentTime:RFC", tr("The current time (RFC2822)."),
-                               []() { return QTime::currentTime().toString(Qt::RFC2822Date); });
-    expander->registerVariable("CurrentDate:Locale", tr("The current date (Locale)."),
-                               []() { return QLocale::system()
-                                        .toString(QDate::currentDate(), QLocale::ShortFormat); });
-    expander->registerVariable("CurrentTime:Locale", tr("The current time (Locale)."),
-                               []() { return QLocale::system()
-                                        .toString(QTime::currentTime(), QLocale::ShortFormat); });
-//    expander->registerVariable("Config:DefaultProjectDirectory", tr("The configured default directory for projects."),
-//                               []() { return DocumentManager::projectsDirectory().toString(); });
-//    expander->registerVariable("Config:LastFileDialogDirectory", tr("The directory last visited in a file dialog."),
-//                               []() { return DocumentManager::fileDialogLastVisitedDirectory(); });
-    expander->registerVariable("HostOs:isWindows",
-                               tr("Is %1 running on Windows?").arg(Constants::IDE_DISPLAY_NAME),
-                               []() { return QVariant(Utils::HostOsInfo::isWindowsHost()).toString(); });
-    expander->registerVariable("HostOs:isOSX",
-                               tr("Is %1 running on OS X?").arg(Constants::IDE_DISPLAY_NAME),
-                               []() { return QVariant(Utils::HostOsInfo::isMacHost()).toString(); });
-    expander->registerVariable("HostOs:isLinux",
-                               tr("Is %1 running on Linux?").arg(Constants::IDE_DISPLAY_NAME),
-                               []() { return QVariant(Utils::HostOsInfo::isLinuxHost()).toString(); });
-    expander->registerVariable("HostOs:isUnix",
-                               tr("Is %1 running on any unix-based platform?")
-                                   .arg(Constants::IDE_DISPLAY_NAME),
-                               []() { return QVariant(Utils::HostOsInfo::isAnyUnixHost()).toString(); });
-    expander->registerVariable("HostOs:PathListSeparator",
-                               tr("The path list separator for the platform."),
-                               []() { return QString(Utils::HostOsInfo::pathListSeparator()); });
-    expander->registerVariable("HostOs:ExecutableSuffix",
-                               tr("The platform executable suffix."),
-                               []() { return QString(Utils::HostOsInfo::withExecutableSuffix("")); });
-    expander->registerVariable("IDE:ResourcePath",
-                               tr("The directory where %1 finds its pre-installed resources.")
-                                   .arg(Constants::IDE_DISPLAY_NAME),
-                               []() { return ICore::resourcePath(); });
-    expander->registerPrefix("CurrentDate:", tr("The current date (QDate formatstring)."),
-                             [](const QString &fmt) { return QDate::currentDate().toString(fmt); });
-    expander->registerPrefix("CurrentTime:", tr("The current time (QTime formatstring)."),
-                             [](const QString &fmt) { return QTime::currentTime().toString(fmt); });
-    expander->registerVariable("UUID", tr("Generate a new UUID."),
-                               []() { return QUuid::createUuid().toString(); });
-
-    expander->registerPrefix("#:", tr("A comment."), [](const QString &) { return QString(); });
-
-    Utils::PathChooser::setAboutToShowContextMenuHandler(&CorePlugin::addToPathChooserContextMenu);
 
     return true;
 }
 
 void CorePlugin::extensionsInitialized()
 {
-    ///DesignMode::createModeIfRequired();
-    ///Find::extensionsInitialized();
-    ///m_locator->extensionsInitialized();
     m_mainWindow->extensionsInitialized();
     if (ExtensionSystem::PluginManager::hasError()) {
         auto errorOverview = new ExtensionSystem::PluginErrorOverview(m_mainWindow);

@@ -59,7 +59,7 @@ public:
     void addAction(Command *action, Utils::Id group = {}) override;
     void addMenu(ActionContainer *menu, Utils::Id group = {}) override;
     void addMenu(ActionContainer *before, ActionContainer *menu) override;
-    Command *addSeparator(const Context &context, Utils::Id group = {}, QAction **outSeparator = nullptr) override;
+    Command *addSeparator(Utils::Id group = {}, QAction **outSeparator = nullptr) override;
     void clear() override;
 
     Utils::Id id() const override;

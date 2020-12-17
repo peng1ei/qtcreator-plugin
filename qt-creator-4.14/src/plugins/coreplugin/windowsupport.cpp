@@ -55,10 +55,10 @@ WindowSupport::WindowSupport(QWidget *window, const Context &context)
 {
     m_window->installEventFilter(this);
 
-    m_contextObject = new IContext(this);
+    //m_contextObject = new IContext(this);
     m_contextObject->setWidget(window);
     m_contextObject->setContext(context);
-    ICore::addContextObject(m_contextObject);
+    //ICore::addContextObject(m_contextObject);
 
     if (useMacShortcuts) {
         m_minimizeAction = new QAction(this);

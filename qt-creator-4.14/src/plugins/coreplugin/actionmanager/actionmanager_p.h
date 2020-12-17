@@ -27,7 +27,7 @@
 
 #include <coreplugin/actionmanager/command_p.h>
 #include <coreplugin/actionmanager/actioncontainer_p.h>
-#include <coreplugin/icontext.h>
+//#include <coreplugin/icontext.h>
 
 #include <QMap>
 #include <QHash>
@@ -51,14 +51,14 @@ public:
 
     ~ActionManagerPrivate() override;
 
-    void setContext(const Context &context);
+    //void setContext(const Context &context);
     bool hasContext(int context) const;
 
     void saveSettings();
     void saveSettings(Action *cmd);
 
     void showShortcutPopup(const QString &shortcut);
-    bool hasContext(const Context &context) const;
+    //bool hasContext(const Context &context) const;
     Action *overridableAction(Utils::Id id);
 
     void readUserSettings(Utils::Id id, Action *cmd);
@@ -70,7 +70,7 @@ public:
 
     IdContainerMap m_idContainerMap;
 
-    Context m_context;
+    //Context m_context;
 
     bool m_presentationModeEnabled = false;
 };

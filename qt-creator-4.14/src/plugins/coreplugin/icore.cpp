@@ -24,10 +24,6 @@
 ****************************************************************************/
 
 #include "icore.h"
-
-#include "windowsupport.h"
-///#include "dialogs/settingsdialog.h"
-
 #include <app/app_version.h>
 #include <extensionsystem/pluginmanager.h>
 
@@ -265,11 +261,11 @@ ICore::~ICore()
     \sa msgShowOptionsDialog()
     \sa msgShowOptionsDialogToolTip()
 */
-bool ICore::showOptionsDialog(const Id page, QWidget *parent)
-{
-    return false;
-    ///return executeSettingsDialog(parent ? parent : dialogParent(), page);
-}
+//bool ICore::showOptionsDialog(const Id page, QWidget *parent)
+//{
+//    return false;
+//    ///return executeSettingsDialog(parent ? parent : dialogParent(), page);
+//}
 
 /*!
     Returns the text to use on buttons that open the options dialog.
@@ -312,23 +308,23 @@ QString ICore::msgShowOptionsDialogToolTip()
 
     \sa showOptionsDialog()
 */
-bool ICore::showWarningWithOptions(const QString &title, const QString &text,
-                                   const QString &details, Id settingsId, QWidget *parent)
-{
-    if (!parent)
-        parent = m_mainwindow;
-    QMessageBox msgBox(QMessageBox::Warning, title, text,
-                       QMessageBox::Ok, parent);
-    if (!details.isEmpty())
-        msgBox.setDetailedText(details);
-    QAbstractButton *settingsButton = nullptr;
-    if (settingsId.isValid())
-        settingsButton = msgBox.addButton(msgShowOptionsDialog(), QMessageBox::AcceptRole);
-    msgBox.exec();
-    if (settingsButton && msgBox.clickedButton() == settingsButton)
-        return showOptionsDialog(settingsId);
-    return false;
-}
+//bool ICore::showWarningWithOptions(const QString &title, const QString &text,
+//                                   const QString &details, Id settingsId, QWidget *parent)
+//{
+//    if (!parent)
+//        parent = m_mainwindow;
+//    QMessageBox msgBox(QMessageBox::Warning, title, text,
+//                       QMessageBox::Ok, parent);
+//    if (!details.isEmpty())
+//        msgBox.setDetailedText(details);
+//    QAbstractButton *settingsButton = nullptr;
+//    if (settingsId.isValid())
+//        settingsButton = msgBox.addButton(msgShowOptionsDialog(), QMessageBox::AcceptRole);
+//    msgBox.exec();
+//    if (settingsButton && msgBox.clickedButton() == settingsButton)
+//        return showOptionsDialog(settingsId);
+//    return false;
+//}
 
 /*!
     Returns the application's main settings object.
@@ -595,10 +591,10 @@ QString ICore::buildCompatibilityString()
     \sa addContextObject()
     \sa {The Action Manager and Commands}
 */
-IContext *ICore::currentContextObject()
-{
-    return m_mainwindow->currentContextObject();
-}
+//IContext *ICore::currentContextObject()
+//{
+//    return m_mainwindow->currentContextObject();
+//}
 
 /*!
     Returns the widget of the top level IContext of the current context, or \c
@@ -606,20 +602,20 @@ IContext *ICore::currentContextObject()
 
     \sa currentContextObject()
 */
-QWidget *ICore::currentContextWidget()
-{
-    IContext *context = currentContextObject();
-    return context ? context->widget() : nullptr;
-}
+//QWidget *ICore::currentContextWidget()
+//{
+//    IContext *context = currentContextObject();
+//    return context ? context->widget() : nullptr;
+//}
 
 /*!
     Returns the registered IContext instance for the specified \a widget,
     if any.
 */
-IContext *ICore::contextObject(QWidget *widget)
-{
-    return m_mainwindow->contextObject(widget);
-}
+//IContext *ICore::contextObject(QWidget *widget)
+//{
+//    return m_mainwindow->contextObject(widget);
+//}
 
 /*!
     Returns the main window of the application.
@@ -659,10 +655,10 @@ QStatusBar *ICore::statusBar()
     Use for notifying the user of something without interrupting with
     dialog. Use sparingly.
 */
-Utils::InfoBar *ICore::infoBar()
-{
-    return m_mainwindow->infoBar();
-}
+//Utils::InfoBar *ICore::infoBar()
+//{
+//    return m_mainwindow->infoBar();
+//}
 
 /*!
     Raises and activates the window for \a widget. This contains workarounds
@@ -695,31 +691,31 @@ void ICore::raiseWindow(QWidget *widget)
     \sa addContextObject()
     \sa {The Action Manager and Commands}
 */
-void ICore::updateAdditionalContexts(const Context &remove, const Context &add,
-                                     ContextPriority priority)
-{
-    m_mainwindow->updateAdditionalContexts(remove, add, priority);
-}
+//void ICore::updateAdditionalContexts(const Context &remove, const Context &add,
+//                                     ContextPriority priority)
+//{
+//    //m_mainwindow->updateAdditionalContexts(remove, add, priority);
+//}
 
 /*!
     Adds \a context with \a priority to the list of active additional contexts.
 
     \sa updateAdditionalContexts()
 */
-void ICore::addAdditionalContext(const Context &context, ContextPriority priority)
-{
-    m_mainwindow->updateAdditionalContexts(Context(), context, priority);
-}
+//void ICore::addAdditionalContext(const Context &context, ContextPriority priority)
+//{
+//    //m_mainwindow->updateAdditionalContexts(Context(), context, priority);
+//}
 
 /*!
     Removes \a context from the list of active additional contexts.
 
     \sa updateAdditionalContexts()
 */
-void ICore::removeAdditionalContext(const Context &context)
-{
-    m_mainwindow->updateAdditionalContexts(context, Context(), ContextPriority::Low);
-}
+//void ICore::removeAdditionalContext(const Context &context)
+//{
+//    m_mainwindow->updateAdditionalContexts(context, Context(), ContextPriority::Low);
+//}
 
 /*!
     Adds \a context to the list of registered IContext instances.
@@ -732,10 +728,10 @@ void ICore::removeAdditionalContext(const Context &context)
     \sa currentContextObject()
     \sa {The Action Manager and Commands}
 */
-void ICore::addContextObject(IContext *context)
-{
-    m_mainwindow->addContextObject(context);
-}
+//void ICore::addContextObject(IContext *context)
+//{
+//    m_mainwindow->addContextObject(context);
+//}
 
 /*!
     Unregisters a \a context object from the list of registered IContext
@@ -746,10 +742,10 @@ void ICore::addContextObject(IContext *context)
     \sa updateAdditionalContexts()
     \sa currentContextObject()
 */
-void ICore::removeContextObject(IContext *context)
-{
-    m_mainwindow->removeContextObject(context);
-}
+//void ICore::removeContextObject(IContext *context)
+//{
+//    m_mainwindow->removeContextObject(context);
+//}
 
 /*!
     Registers a \a window with the specified \a context. Registered windows are
@@ -760,10 +756,10 @@ void ICore::removeContextObject(IContext *context)
     Whenever the application focus is in \a window, its \a context is made
     active.
 */
-void ICore::registerWindow(QWidget *window, const Context &context)
-{
-    new WindowSupport(window, context); // deletes itself when widget is destroyed
-}
+//void ICore::registerWindow(QWidget *window, const Context &context)
+//{
+//    new WindowSupport(window, context); // deletes itself when widget is destroyed
+//}
 
 /*!
     Opens files using \a arguments and \a flags like it would be

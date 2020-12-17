@@ -26,7 +26,8 @@
 #pragma once
 
 #include "../core_global.h"
-#include "../icontext.h"
+//#include "../icontext.h"
+#include "utils/id.h"
 
 #include <QObject>
 
@@ -69,7 +70,7 @@ public:
     virtual void addMenu(ActionContainer *menu, Utils::Id group = {}) = 0;
     virtual void addMenu(ActionContainer *before, ActionContainer *menu) = 0;
     Command *addSeparator(Utils::Id group = {});
-    virtual Command *addSeparator(const Context &context, Utils::Id group = {}, QAction **outSeparator = nullptr) = 0;
+    virtual Command *addSeparator(Utils::Id group, QAction **outSeparator) = 0;
 
     // This clears this menu and submenus from all actions and submenus.
     // It does not destroy the submenus and commands, just removes them from their parents.

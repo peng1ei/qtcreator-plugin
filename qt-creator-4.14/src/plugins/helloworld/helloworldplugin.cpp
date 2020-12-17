@@ -29,8 +29,6 @@
 #include <coreplugin/actionmanager/actioncontainer.h>
 #include <coreplugin/coreconstants.h>
 #include <coreplugin/icore.h>
-#include <coreplugin/imode.h>
-#include <coreplugin/modemanager.h>
 
 #include <QDebug>
 #include <QAction>
@@ -40,22 +38,6 @@
 
 namespace HelloWorld {
 namespace Internal {
-
-/*!  A mode with a push button based on BaseMode.  */
-
-class HelloMode : public Core::IMode
-{
-public:
-    HelloMode()
-    {
-        setWidget(new QPushButton(tr("Hello World PushButton!")));
-        setContext(Core::Context("HelloWorld.MainView"));
-        setDisplayName(tr("Hello world!"));
-        setIcon(QIcon());
-        setPriority(0);
-        setId("HelloWorld.HelloWorldMode");
-    }
-};
 
 
 /*! Constructs the Hello World plugin. Normally plugins don't do anything in
@@ -72,7 +54,7 @@ HelloWorldPlugin::HelloWorldPlugin()
 */
 HelloWorldPlugin::~HelloWorldPlugin()
 {
-    delete m_helloMode;
+
 }
 
 /*! Initializes the plugin. Returns true on success.
@@ -88,16 +70,19 @@ bool HelloWorldPlugin::initialize(const QStringList &arguments, QString *errorMe
 
     // Create a unique context for our own view, that will be used for the
     // menu entry later.
-    Core::Context context("HelloWorld.MainView");
+    //Core::Context context("HelloWorld.MainView");
 
     // Create an action to be triggered by a menu entry
-    auto helloWorldAction = new QAction(tr("Say \"&Hello World!\""), this);
-    connect(helloWorldAction, &QAction::triggered, this, &HelloWorldPlugin::sayHelloWorld);
+    helloWorldAction = new QAction(tr("Say \"&Hello World!\""), this);
+    helloWorldAction->setObjectName("hello");
+    //connect(helloWorldAction, &QAction::triggered, this, &HelloWorldPlugin::sayHelloWorld);
+
+    helloWorldAction->setEnabled(true);
 
     // Register the action with the action manager
     Core::Command *command =
             Core::ActionManager::registerAction(
-                    helloWorldAction, "HelloWorld.HelloWorldAction", context);
+                    helloWorldAction, "HelloWorld.HelloWorldAction");
 
     // Create our own menu to place in the Tools menu
     Core::ActionContainer *helloWorldMenu =
@@ -114,8 +99,13 @@ bool HelloWorldPlugin::initialize(const QStringList &arguments, QString *errorMe
             Core::ActionManager::actionContainer(Core::Constants::M_TOOLS);
     toolsMenu->addMenu(helloWorldMenu);
 
+    qDebug() << "helloWorldAction: " << helloWorldAction;// helloWorldAction->objectName();
+    qDebug() << "command: " << command->action()->objectName();
+    //connect(helloWorldAction, &QAction::triggered, this, &HelloWorldPlugin::sayHelloWorld);
+    connect(command->action(), &QAction::triggered, this, &HelloWorldPlugin::sayHelloWorld);
+    command->action()->setEnabled(true);
+
     // Add a mode with a push button based on BaseMode.
-    m_helloMode = new HelloMode;
 
     return true;
 }

@@ -27,10 +27,14 @@
 
 #include <extensionsystem/iplugin.h>
 
+QT_BEGIN_NAMESPACE
+class QAction;
+QT_END_NAMESPACE
+
 namespace HelloWorld {
 namespace Internal {
 
-class HelloMode;
+
 
 class HelloWorldPlugin
   : public ExtensionSystem::IPlugin
@@ -49,7 +53,7 @@ public:
 private:
     void sayHelloWorld();
 
-    HelloMode *m_helloMode = nullptr;
+    QAction *helloWorldAction;
 };
 
 } // namespace Internal

@@ -27,7 +27,7 @@
 #include "actionmanager.h"
 
 #include <coreplugin/coreconstants.h>
-#include <coreplugin/icontext.h>
+//#include <coreplugin/icontext.h>
 
 #include <utils/qtcassert.h>
 
@@ -335,13 +335,13 @@ void ActionContainerPrivate::addMenu(ActionContainer *before, ActionContainer *m
     scheduleUpdate();
 }
 
-Command *ActionContainerPrivate::addSeparator(const Context &context, Id group, QAction **outSeparator)
+Command *ActionContainerPrivate::addSeparator(Id group, QAction **outSeparator)
 {
     static int separatorIdCount = 0;
     auto separator = new QAction(this);
     separator->setSeparator(true);
     Id sepId = id().withSuffix(".Separator.").withSuffix(++separatorIdCount);
-    Command *cmd = ActionManager::registerAction(separator, sepId, context);
+    Command *cmd = ActionManager::registerAction(separator, sepId);
     addAction(cmd, group);
     if (outSeparator)
         *outSeparator = separator;
@@ -688,8 +688,8 @@ bool TouchBarActionContainer::updateInternal()
 */
 Command *ActionContainer::addSeparator(Id group)
 {
-    static const Context context(Constants::C_GLOBAL);
-    return addSeparator(context, group);
+    //static const Context context(Constants::C_GLOBAL);
+    return addSeparator(group, nullptr);
 }
 
 } // namespace Core

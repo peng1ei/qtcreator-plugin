@@ -25,7 +25,6 @@
 
 #pragma once
 
-#include "icontext.h"
 #include "icore.h"
 
 #include <utils/appmainwindow.h>
@@ -37,7 +36,6 @@
 #include <unordered_map>
 
 QT_BEGIN_NAMESPACE
-///!class QPrinter;
 class QToolButton;
 QT_END_NAMESPACE
 
@@ -47,31 +45,11 @@ class InfoBar;
 
 namespace Core {
 
-///!class EditorManager;
-///!class ExternalToolManager;
-///!class IDocument;
-///!class JsExpander;
-///class MessageManager;
-class ModeManager;
-///class ProgressManager;
-///!class NavigationWidget;
-enum class Side;
-///class RightPaneWidget;
 class SettingsDatabase;
-///!class VcsManager;
 
 namespace Internal {
 
-///class FancyTabWidget;
-class GeneralSettings;
-///!class ProgressManagerPrivate;
-///!class ShortcutSettings;
-///!class ToolSettings;
-///!class MimeTypeSettings;
 class VersionDialog;
-class WindowSupport;
-///!class SystemEditor;
-///!class SystemSettings;
 
 class MainWindow : public Utils::AppMainWindow
 {
@@ -85,22 +63,8 @@ public:
     void extensionsInitialized();
     void aboutToShutdown();
 
-    IContext *contextObject(QWidget *widget) const;
-    void addContextObject(IContext *context);
-    void removeContextObject(IContext *context);
-
-///!    IDocument *openFiles(const QStringList &fileNames,
-///!                         ICore::OpenFilesFlags flags,
-///!                         const QString &workingDirectory = QString());
-
     inline SettingsDatabase *settingsDatabase() const { return m_settingsDatabase; }
-    ///virtual QPrinter *printer() const;
-    IContext * currentContextObject() const;
     QStatusBar *statusBar() const;
-    Utils::InfoBar *infoBar() const;
-
-    void updateAdditionalContexts(const Context &remove, const Context &add,
-                                  ICore::ContextPriority priority);
 
     bool askConfirmationBeforeExit() const;
     void setAskConfirmationBeforeExit(bool ask);
@@ -130,14 +94,9 @@ private:
     void aboutQtCreator();
     void aboutPlugins();
     void updateFocusWidget(QWidget *old, QWidget *now);
-    ///NavigationWidget *navigationWidget(Side side) const;
-    void setSidebarVisible(bool visible, Side side);
     void destroyVersionDialog();
     void openDroppedFiles(const QList<Utils::DropSupport::FileSpec> &files);
     void restoreWindowState();
-
-    void updateContextObject(const QList<IContext *> &context);
-    void updateContext();
 
     void registerDefaultContainers();
     void registerDefaultActions();
@@ -150,38 +109,9 @@ private:
 
     ICore *m_coreImpl = nullptr;
     QStringList m_aboutInformation;
-    Context m_highPrioAdditionalContexts;
-    Context m_lowPrioAdditionalContexts;
     SettingsDatabase *m_settingsDatabase = nullptr;
-    ///!mutable QPrinter *m_printer = nullptr;
-    WindowSupport *m_windowSupport = nullptr;
-    ///!EditorManager *m_editorManager = nullptr;
-    ///!ExternalToolManager *m_externalToolManager = nullptr;
-    ///MessageManager *m_messageManager = nullptr;
-    ///!ProgressManagerPrivate *m_progressManager = nullptr;
 
-    ///!JsExpander *m_jsExpander = nullptr;
-    ///!VcsManager *m_vcsManager = nullptr;
-
-    ///ModeManager *m_modeManager = nullptr;
-    ///FancyTabWidget *m_modeStack = nullptr;
-
-    // TODO：左右导航面板，如管理项目的左右面板，可去除
-    ///!NavigationWidget *m_leftNavigationWidget = nullptr;
-    ///!NavigationWidget *m_rightNavigationWidget = nullptr;
-    ///RightPaneWidget *m_rightPaneWidget = nullptr;
     VersionDialog *m_versionDialog = nullptr;
-
-    QList<IContext *> m_activeContext;
-
-    std::unordered_map<QWidget *, IContext *> m_contextWidgets;
-
-    ///!GeneralSettings *m_generalSettings = nullptr;
-    ///!SystemSettings *m_systemSettings = nullptr;
-    ///!ShortcutSettings *m_shortcutSettings = nullptr;
-    ///!ToolSettings *m_toolSettings = nullptr;
-    ///!MimeTypeSettings *m_mimeTypeSettings = nullptr;
-    ///!SystemEditor *m_systemEditor = nullptr;
 
     // actions
     QAction *m_focusToEditor = nullptr;
@@ -190,10 +120,6 @@ private:
     QAction *m_openWithAction = nullptr;
     QAction *m_saveAllAction = nullptr;
     QAction *m_exitAction = nullptr;
-    ///!QAction *m_optionsAction = nullptr;
-    // TODO：控制左右面板是否显示（可去除）
-    ///!QAction *m_toggleLeftSideBarAction = nullptr;
-    ///!QAction *m_toggleRightSideBarAction = nullptr;
 
     QAction *m_cycleModeSelectorStyleAction = nullptr;
     QAction *m_setModeSelectorStyleIconsAndTextAction = nullptr;
@@ -201,9 +127,6 @@ private:
     QAction *m_setModeSelectorStyleIconsOnlyAction = nullptr;
     QAction *m_themeAction = nullptr;
 
-    // 状态栏上的左右隐藏按钮
-    ///!QToolButton *m_toggleLeftSideBarButton = nullptr;
-    ///!QToolButton *m_toggleRightSideBarButton = nullptr;
     bool m_askConfirmationBeforeExit = false;
     QColor m_overrideColor;
     QList<std::function<bool()>> m_preCloseListeners;
