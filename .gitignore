@@ -82,3 +82,17 @@ qt-creator-4.14/src/plugins/Makefile.Release
 qt-creator-4.14/src/plugins/coreplugin/Makefile
 qt-creator-4.14/src/plugins/coreplugin/Makefile.Debug
 qt-creator-4.14/src/plugins/coreplugin/Makefile.Release
+
+pluginframework/*.user
+pluginframework/Makefile
+pluginframework/Makefile.Debug
+pluginframework/Makefile.Release
+pluginframework/.qmake.stash
+pluginframework/bin/
+pluginframework/build/
+pluginframework/src/Makefile
+pluginframework/src/Makefile.Debug
+pluginframework/src/Makefile.Release
+pluginframework/src/app/Makefile*
+pluginframework/src/libs/Makefile*
+

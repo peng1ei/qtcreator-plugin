@@ -1,0 +1,12 @@
+#ifndef AGGREGATION_GLOBAL_H
+#define AGGREGATION_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(AGGREGATION_LIBRARY)
+#  define AGGREGATION_EXPORT Q_DECL_EXPORT
+#else
+#  define AGGREGATION_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // AGGREGATION_GLOBAL_H
